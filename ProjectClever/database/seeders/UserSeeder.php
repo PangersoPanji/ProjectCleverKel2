@@ -12,25 +12,25 @@ class UserSeeder extends Seeder
     {
         // Create admin user
         User::create([
-            'name' => 'Admin Clever',
+            'name' => 'Admin User',
             'email' => 'admin@clever.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('password'),
             'role' => 'admin',
             'is_active' => true,
         ]);
 
-        // Create freelancer
+        // Create sample freelancer
         User::create([
-            'name' => 'Freelancer',
+            'name' => 'Sample Freelancer',
             'email' => 'freelancer@clever.com',
             'password' => Hash::make('password'),
             'role' => 'freelancer',
             'is_active' => true,
         ]);
 
-        // Create client
+        // Create sample client
         User::create([
-            'name' => 'Client',
+            'name' => 'Sample Client',
             'email' => 'client@clever.com',
             'password' => Hash::make('password'),
             'role' => 'client',
