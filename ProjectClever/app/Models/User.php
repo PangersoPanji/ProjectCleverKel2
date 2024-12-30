@@ -36,9 +36,14 @@ class User extends Authenticatable implements FilamentUser
         return match ($panel->getId()) {
             'admin' => $this->role === 'admin',
             'freelancer' => $this->role === 'freelancer',
-            'client' => $this->role === 'client',
+            'public' => true,
             default => false,
         };
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return null;
     }
 
     public function services(): HasMany
