@@ -6,13 +6,14 @@
                     <!-- Back Button -->
                     <div class="mb-6">
                         <a href="{{ url()->previous() }}"
-                           class="text-blue-600 hover:text-blue-700 flex items-center gap-2">
+                           class="text-primary hover:text-blue-700 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
                             Back
                         </a>
                     </div>
+
                     <!-- Service Details -->
                     <div class="max-w-3xl mx-auto">
                         <!-- Thumbnail -->
@@ -23,6 +24,7 @@
                                      class="w-full h-64 object-cover rounded-lg">
                             </div>
                         @endif
+
                         <!-- Title and Basic Info -->
                         <div class="mb-6">
                             <h1 class="text-3xl font-bold mb-4">{{ $service->title }}</h1>
@@ -35,15 +37,17 @@
                                         By: {{ $service->user->name }}
                                     </span>
                                 </div>
-                                <span class="text-2xl font-bold text-blue-600">
+                                <span class="text-2xl font-bold text-primary">
                                     ${{ number_format($service->price, 2) }}
                                 </span>
                             </div>
                         </div>
+
                         <!-- Description -->
                         <div class="prose max-w-none mb-8">
                             {{ $service->description }}
                         </div>
+
                         <!-- Service Details -->
                         <div class="bg-gray-50 rounded-lg p-4 mb-8">
                             <h3 class="font-semibold mb-2">Service Details</h3>
@@ -60,6 +64,7 @@
                                 </li>
                             </ul>
                         </div>
+
                         <!-- Gallery -->
                         @if($service->gallery && count($service->gallery) > 0)
                             <div class="mb-8">
@@ -83,12 +88,12 @@
                                             <p class="text-gray-600 mb-2">
                                                 Get it delivered in {{ $service->duration_days }} days
                                             </p>
-                                            <p class="text-2xl font-bold text-blue-600">
+                                            <p class="text-2xl font-bold text-primary">
                                                 ${{ number_format($service->price, 2) }}
                                             </p>
                                         </div>
                                         <a href="{{ route('orders.create', $service) }}"
-                                           class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                                           class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
                                             Order Now
                                         </a>
                                     </div>
@@ -99,7 +104,7 @@
                                         <h3 class="text-xl font-semibold">Manage this service</h3>
                                         <div class="space-x-4">
                                             <a href="{{ route('services.edit', $service) }}"
-                                               class="text-blue-600 hover:text-blue-700">
+                                               class="text-primary hover:text-blue-700">
                                                 Edit Service
                                             </a>
                                         </div>
@@ -112,11 +117,12 @@
                                     Want to order this service?
                                 </p>
                                 <a href="{{ route('login') }}"
-                                   class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 inline-block">
+                                   class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 inline-block">
                                     Login to Order
                                 </a>
                             </div>
                         @endauth
+
                         <!-- Freelancer Info -->
                         <div class="mt-8 p-6 bg-gray-50 rounded-lg">
                             <h3 class="font-semibold mb-4">About the Freelancer</h3>
@@ -124,7 +130,7 @@
                                 <div class="flex-shrink-0">
                                     <!-- You can add user avatar here if you have one -->
                                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <span class="text-blue-600 font-semibold">
+                                        <span class="text-primary font-semibold">
                                             {{ substr($service->user->name, 0, 1) }}
                                         </span>
                                     </div>
@@ -137,6 +143,7 @@
                                 </div>
                             </div>
                         </div>
+                    
                     </div>
                 </div>
             </div>

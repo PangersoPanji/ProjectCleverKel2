@@ -1,24 +1,23 @@
 <?php
-$navigation = [
-    'Browse Services' => route('services.index'),
-];
+if (!auth()->check() || (auth()->check() && auth()->user()->role === 'client')) {
+    $navigation['Browse Services'] = route('services.index');
+    $navigation['Help Center'] = route('help');
+}
 
 if (auth()->check() && auth()->user()->role === 'freelancer') {
     $navigation['Post a Service'] = route('services.create');
     $navigation['Manage Service'] = route('services.manage');
-}
-
-if (!auth()->check()) {
-    $navigation['Become a Freelancer'] = url('freelancer/login');
+    $navigation['My Orders'] = route('orders.freelancer');
 }
 ?>
+
 <nav class="bg-white border-b border-gray-200">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('home') }}" class="text-blue-600 font-bold text-xl">
+                    <a href="{{ route('home') }}" class="text-primary font-bold text-xl">
                         Clever
                     </a>
                 </div>
@@ -34,11 +33,7 @@ if (!auth()->check()) {
                             {{ $name }}
                         </a>
                     @endforeach
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="{{ url('freelancer/login') }}" class="text-sm ml-8 text-gray-500 hover:text-gray-700 text-center">
-                            Become a Freelancer
-                        </a>
-                    </div>
+
                 </div>
             </div>
 
@@ -48,7 +43,7 @@ if (!auth()->check()) {
                     <a href="{{ route('login') }}" class="text-gray-500 hover:text-gray-700">
                         Sign In
                     </a>
-                    <a href="{{ route('register') }}" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700">
+                    <a href="{{ route('register') }}" class="bg-primary text-white rounded-lg px-4 py-2 hover:bg-blue-700">
                         Get Started
                     </a>
                 @else
@@ -59,6 +54,8 @@ if (!auth()->check()) {
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
+
+                        <div x-show="open" class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
 
                         <div x-show="open"
                              x-transition:enter="transition ease-out duration-200"
@@ -75,7 +72,7 @@ if (!auth()->check()) {
                             </a>
 
                             @if(auth()->user()->role === 'client')
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <a  href="{{ route('orders.index') }}"class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     My Orders
                                 </a>
                             @endif
@@ -129,11 +126,7 @@ if (!auth()->check()) {
             @endforeach
         </div>
 
-         <div class="pt-4 pb-1 border-t border-gray-200">
-            <a href="{{ url('freelancer/login') }}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300">
-                Become a Freelancer
-            </a>
-        </div>
+
 
         <!-- Mobile menu authentication links -->
         <div class="pt-4 pb-1 border-t border-gray-200">
@@ -150,7 +143,7 @@ if (!auth()->check()) {
                     </a>
 
                     @if(auth()->user()->role === 'client')
-                        <a 
+                        <a href="{{ route('orders.index') }}"
                            class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300">
                             My Orders
                         </a>

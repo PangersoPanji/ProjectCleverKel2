@@ -43,4 +43,19 @@ class Service extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasManyThrough(Review::class, Project::class);
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        return $this->reviews()->where('is_public', true)->avg('rating') ?? 0;
+    }
+
+    public function getReviewsCountAttribute()
+    {
+        return $this->reviews()->where('is_public', true)->count();
+    }
 }

@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('services', function (Blueprint $table) {
-            $table->string('thumbnail')->nullable();
-            $table->json('gallery')->nullable();
+        Schema::table('projects', function (Blueprint $table) {
+            $table->string('transaction_proof')->nullable();
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('services', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             //
         });
     }

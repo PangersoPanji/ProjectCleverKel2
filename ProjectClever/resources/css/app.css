@@ -8,6 +8,7 @@
     height: 0;
     overflow: hidden;
 }
+
 .image-container img {
     position: absolute;
     top: 0;

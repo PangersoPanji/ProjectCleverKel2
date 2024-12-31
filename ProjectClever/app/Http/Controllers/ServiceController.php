@@ -9,6 +9,28 @@ use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
+    public function index(Request $request)
+    {
+        $categories = Category::where('is_active', true)->get();
+
+        $query = Service::with(['user', 'category'])
+            ->where('is_active', true);
+
+        // Filter by category if selected
+        if ($request->has('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Search by title if search query exists
+        if ($request->has('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $services = $query->latest()->paginate(12);
+
+        return view('services.index', compact('services', 'categories'));
+    }
+
     public function create()
     {
         $categories = Category::where('is_active', true)->get();
@@ -72,6 +94,12 @@ class ServiceController extends Controller
                 ->with('error', 'Unauthorized action.');
         }
 
+        // Check if service has any active orders
+        if ($service->projects()->where('status', '!=', 'cancelled')->exists()) {
+            return redirect()->route('services.manage')
+                ->with('error', 'Cannot delete service with active orders.');
+        }
+
         $service->delete();
 
         return redirect()->route('services.manage')
@@ -111,5 +139,16 @@ class ServiceController extends Controller
 
         return redirect()->route('services.manage')
             ->with('success', 'Service updated successfully.');
+    }
+
+    public function byCategory(Category $category)
+    {
+        $services = Service::where('category_id', $category->id)
+            ->where('is_active', true)
+            ->with(['user'])
+            ->latest()
+            ->paginate(12);
+
+        return view('services.category', compact('category', 'services'));
     }
 }
