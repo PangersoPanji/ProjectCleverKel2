@@ -1,7 +1,6 @@
 <?php
 if (!auth()->check() || (auth()->check() && auth()->user()->role === 'client')) {
     $navigation['Browse Services'] = route('services.index');
-    $navigation['Help Center'] = route('help');
 }
 
 if (auth()->check() && auth()->user()->role === 'freelancer') {
@@ -43,7 +42,7 @@ if (auth()->check() && auth()->user()->role === 'freelancer') {
                     <a href="{{ route('login') }}" class="text-gray-500 hover:text-gray-700">
                         Sign In
                     </a>
-                    <a href="{{ route('register') }}" class="bg-primary text-white rounded-lg px-4 py-2 hover:bg-blue-700">
+                    <a href="{{ route('register') }}" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700">
                         Get Started
                     </a>
                 @else
@@ -56,6 +55,14 @@ if (auth()->check() && auth()->user()->role === 'freelancer') {
                         </button>
 
                         <div x-show="open" class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            @if(auth()->user()->role === 'freelancer')
+                                <a href="{{ url('freelancer') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    My Dashboard
+                                </a>
+                                <a href="{{ route('services.manage') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    My Services
+                                </a>
+                            @endif
 
                         <div x-show="open"
                              x-transition:enter="transition ease-out duration-200"
