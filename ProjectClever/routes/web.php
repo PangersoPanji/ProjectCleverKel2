@@ -57,3 +57,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
+
+// Admin Routes
+Route::middleware(['auth', \App\Http\Middleware\EnsureUserRole::class . ':admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class)->except(['show', 'create', 'store']);
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('contents', App\Http\Controllers\Admin\ContentController::class);
+});
