@@ -9,25 +9,28 @@
                             {{ session('success') }}
                         </div>
                     @endif
+
                     @if (session('error'))
                         <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
                             {{ session('error') }}
                         </div>
                     @endif
+
                     <!-- Header Section -->
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-bold">My Services</h2>
                         <a href="{{ route('services.create') }}"
-                           class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                           class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                             Add New Service
                         </a>
                     </div>
+
                     <!-- Services List -->
                     @if($services->isEmpty())
                         <div class="text-center py-12">
                             <p class="text-gray-500 mb-4">You haven't created any services yet.</p>
                             <a href="{{ route('services.create') }}"
-                               class="text-blue-600 hover:text-blue-700 font-semibold">
+                               class="text-primary hover:text-blue-700 font-semibold">
                                 Create Your First Service
                             </a>
                         </div>
@@ -86,7 +89,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex items-center space-x-3">
                                                 <a href="{{ route('services.show', $service) }}"
-                                                   class="text-blue-600 hover:text-blue-900">
+                                                   class="text-primary hover:text-blue-900">
                                                     View
                                                 </a>
                                                 <a href="{{ route('services.edit', $service) }}"
@@ -100,8 +103,8 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                            class="text-red-600 hover:text-red-900"
-                                                            >
+                                                            class="text-red-600 hover:text-red-900 {{ $service->projects()->where('status', '!=', 'cancelled')->exists() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                                                            {{ $service->projects()->where('status', '!=', 'cancelled')->exists() ? 'disabled' : '' }}>
                                                         Delete
                                                     </button>
                                                 </form>
@@ -112,6 +115,7 @@
                                 </tbody>
                             </table>
                         </div>
+
                         <!-- Pagination -->
                         <div class="mt-4">
                             {{ $services->links() }}

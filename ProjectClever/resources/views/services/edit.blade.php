@@ -6,30 +6,35 @@
                     <!-- Back Button -->
                     <div class="mb-6">
                         <a href="{{ route('services.manage') }}"
-                           class="text-blue-600 hover:text-blue-700 flex items-center gap-2">
+                           class="text-primary hover:text-blue-700 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
                             Back to Services
                         </a>
                     </div>
+
                     <div class="mb-6">
                         <h2 class="text-2xl font-bold">Edit Service</h2>
                         <p class="text-gray-600">Update your service information</p>
                     </div>
+
                     @if(session('success'))
                         <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
                             {{ session('success') }}
                         </div>
                     @endif
+
                     @if(session('error'))
                         <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
                             {{ session('error') }}
                         </div>
                     @endif
+
                     <form action="{{ route('services.update', $service) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                         @csrf
                         @method('PUT')
+
                         <!-- Title -->
                         <div>
                             <label for="title" class="block text-sm font-medium text-gray-700">
@@ -45,6 +50,7 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+
                         <!-- Category -->
                         <div>
                             <label for="category_id" class="block text-sm font-medium text-gray-700">
@@ -64,6 +70,7 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+
                         <!-- Description -->
                         <div>
                             <label for="description" class="block text-sm font-medium text-gray-700">
@@ -78,6 +85,7 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+
                         <!-- Price and Duration -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -96,6 +104,7 @@
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
+
                             <div>
                                 <label for="duration_days" class="block text-sm font-medium text-gray-700">
                                     Delivery Time (days)
@@ -112,6 +121,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <!-- Thumbnail Image -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700">
@@ -145,6 +155,7 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+
                         <!-- Gallery Images -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700">
@@ -184,6 +195,7 @@
                                 You can select multiple images for the gallery
                             </p>
                         </div>
+
                         <!-- Active Status -->
                         <div>
                             <label class="inline-flex items-center">
@@ -192,14 +204,15 @@
                                        name="is_active"
                                        value="1"
                                        {{ old('is_active', $service->is_active) ? 'checked' : '' }}
-                                       class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                       class="rounded border-gray-300 text-primary shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                 <span class="ml-2">Active</span>
                             </label>
                         </div>
+
                         <!-- Submit Button -->
                         <div class="flex justify-end">
                             <button type="submit"
-                                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                                    class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-700">
                                 Update Service
                             </button>
                         </div>
@@ -208,14 +221,17 @@
             </div>
         </div>
     </div>
+
     @push('scripts')
     <script>
         let removedGalleryImages = [];
+
         function removeThumbnail() {
             const container = document.querySelector('img[alt="Current thumbnail"]').parentElement;
             container.style.display = 'none';
             document.getElementById('remove_thumbnail').value = '1';
         }
+
         function removeGalleryImage(button, index) {
             const imageContainer = button.parentElement;
             imageContainer.remove();
