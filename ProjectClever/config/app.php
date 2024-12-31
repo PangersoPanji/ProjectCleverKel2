@@ -167,9 +167,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // Filament Panel Providers
-        App\Providers\Filament\AdminPanelProvider::class,
-        App\Providers\Filament\FreelancerPanelProvider::class,
+
     ],
 
     /*

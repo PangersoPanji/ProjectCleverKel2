@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable 
 {
     use HasFactory, Notifiable;
 
@@ -31,21 +31,7 @@ class User extends Authenticatable implements FilamentUser
         'is_active' => 'boolean',
     ];
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return match ($panel->getId()) {
-            'admin' => $this->role === 'admin',
-            'freelancer' => $this->role === 'freelancer',
-            'public' => true,
-            default => false,
-        };
-    }
-
-    public function getFilamentAvatarUrl(): ?string
-    {
-        return null;
-    }
-
+    
     public function services(): HasMany
     {
         return $this->hasMany(Service::class);
