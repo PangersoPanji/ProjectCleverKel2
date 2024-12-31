@@ -95,17 +95,31 @@ class OrderController extends Controller
     public function updateStatus(Request $request, Project $project)
     {
         if (Auth::id() !== $project->freelancer_id) {
-            abort(403);
+            return redirect()->route('orders.show', $project)
+                ->with('error', 'Unauthorized action.');
         }
 
+        // Validate the request
         $validated = $request->validate([
-            'status' => 'required|in:in_progress,completed,cancelled'
+            'status' => 'required|in:in_progress,completed,cancelled',
+            'completion_proof' => 'required_if:status,completed|image|max:2048',
         ]);
 
-        $project->update([
-            'status' => $validated['status']
-        ]);
+        // If status is being set to completed, require completion proof
+        if ($request->status === 'completed') {
+            if (!$request->hasFile('completion_proof')) {
+                return back()->with('error', 'Please upload completion proof to mark the project as completed.');
+            }
 
-        return back()->with('success', 'Order status updated successfully!');
+            // Store the completion proof
+            $path = $request->file('completion_proof')->store('completion_proofs', 'public');
+            $project->completion_proof = $path;
+        }
+
+        $project->status = $request->status;
+        $project->save();
+
+        return redirect()->route('orders.show', $project)
+            ->with('success', 'Project status updated successfully.');
     }
 }

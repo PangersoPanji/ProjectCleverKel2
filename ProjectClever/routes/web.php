@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\OrderController;
@@ -13,9 +12,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/categories/{category}', [ServiceController::class, 'byCategory'])->name('services.category');
-Route::get('/help', [ContentController::class, 'index'])->name('help');
-Route::get('/categories/{category}', [ServiceController::class, 'byCategory'])
-    ->name('services.category');
 
 // Authentication Routes
 require __DIR__ . '/auth.php';
@@ -56,12 +52,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
     Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-});
-
-// Admin Routes
-Route::middleware(['auth', \App\Http\Middleware\EnsureUserRole::class . ':admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('dashboard');
-    Route::resource('users', App\Http\Controllers\Admin\UserController::class)->except(['show', 'create', 'store']);
-    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
-    Route::resource('contents', App\Http\Controllers\Admin\ContentController::class);
 });

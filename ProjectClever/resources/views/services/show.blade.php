@@ -6,7 +6,7 @@
                     <!-- Back Button -->
                     <div class="mb-6">
                         <a href="{{ url()->previous() }}"
-                           class="text-primary hover:text-blue-700 flex items-center gap-2">
+                           class="text-blue-600 hover:text-blue-700 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
@@ -37,7 +37,7 @@
                                         By: {{ $service->user->name }}
                                     </span>
                                 </div>
-                                <span class="text-2xl font-bold text-primary">
+                                <span class="text-2xl font-bold text-blue-600">
                                     ${{ number_format($service->price, 2) }}
                                 </span>
                             </div>
@@ -88,12 +88,12 @@
                                             <p class="text-gray-600 mb-2">
                                                 Get it delivered in {{ $service->duration_days }} days
                                             </p>
-                                            <p class="text-2xl font-bold text-primary">
+                                            <p class="text-2xl font-bold text-blue-600">
                                                 ${{ number_format($service->price, 2) }}
                                             </p>
                                         </div>
                                         <a href="{{ route('orders.create', $service) }}"
-                                           class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                                           class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
                                             Order Now
                                         </a>
                                     </div>
@@ -104,7 +104,7 @@
                                         <h3 class="text-xl font-semibold">Manage this service</h3>
                                         <div class="space-x-4">
                                             <a href="{{ route('services.edit', $service) }}"
-                                               class="text-primary hover:text-blue-700">
+                                               class="text-blue-600 hover:text-blue-700">
                                                 Edit Service
                                             </a>
                                         </div>
@@ -117,7 +117,7 @@
                                     Want to order this service?
                                 </p>
                                 <a href="{{ route('login') }}"
-                                   class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 inline-block">
+                                   class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 inline-block">
                                     Login to Order
                                 </a>
                             </div>
@@ -130,7 +130,7 @@
                                 <div class="flex-shrink-0">
                                     <!-- You can add user avatar here if you have one -->
                                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <span class="text-primary font-semibold">
+                                        <span class="text-blue-600 font-semibold">
                                             {{ substr($service->user->name, 0, 1) }}
                                         </span>
                                     </div>
@@ -143,7 +143,36 @@
                                 </div>
                             </div>
                         </div>
-                    
+                        <!-- Reviews Section -->
+                        <div class="mt-8">
+                            <h3 class="text-2xl font-bold mb-6">Reviews</h3>
+                            @if($service->reviews()->where('is_public', true)->count() > 0)
+                                <div class="space-y-6">
+                                    @foreach($service->reviews()->where('is_public', true)->with('client')->latest()->get() as $review)
+                                        <div class="bg-white rounded-lg shadow p-6">
+                                            <div class="flex items-center gap-2 mb-2">
+                                                @for($i = 1; $i <= 5; $i++)
+                                                    <svg class="w-5 h-5 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }}"
+                                                         fill="currentColor"
+                                                         viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                    </svg>
+                                                @endfor
+                                            </div>
+                                            @if($review->title)
+                                                <h4 class="font-semibold mb-2">{{ $review->title }}</h4>
+                                            @endif
+                                            <p class="text-gray-700">{{ $review->comment }}</p>
+                                            <div class="mt-4 text-sm text-gray-500">
+                                                By {{ $review->client->name }} on {{ $review->created_at->format('M d, Y') }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <p class="text-gray-500">No reviews yet.</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

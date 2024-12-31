@@ -5,30 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Project extends Model
+class Review extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'project_id',
         'client_id',
         'freelancer_id',
-        'service_id',
-        'status',
-        'amount',
-        'start_date',
-        'end_date',
-        'requirements',
-        'transaction_proof',
-        'completion_proof'
+        'rating',
+        'title',
+        'comment',
+        'is_public'
     ];
 
     protected $casts = [
-        'amount' => 'decimal:2',
-        'start_date' => 'date',
-        'end_date' => 'date'
+        'rating' => 'integer',
+        'is_public' => 'boolean'
     ];
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
 
     public function client(): BelongsTo
     {
@@ -38,15 +38,5 @@ class Project extends Model
     public function freelancer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'freelancer_id');
-    }
-
-    public function service(): BelongsTo
-    {
-        return $this->belongsTo(Service::class);
-    }
-
-    public function review()
-    {
-        return $this->hasOne(Review::class);
     }
 }
