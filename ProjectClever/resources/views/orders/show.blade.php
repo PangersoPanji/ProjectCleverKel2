@@ -6,7 +6,7 @@
                     <!-- Back Button -->
                     <div class="mb-6">
                         <a href="{{ Auth::id() === $project->client_id ? route('orders.index') : route('orders.freelancer') }}"
-                           class="text-blue-600 hover:text-blue-700 flex items-center gap-2">
+                           class="text-primary hover:text-blue-700 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
@@ -91,7 +91,7 @@
                                     <button type="submit"
                                             name="status"
                                             value="in_progress"
-                                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                            class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                                         Start Project
                                     </button>
                                 </form>
@@ -160,7 +160,7 @@
                                      class="max-w-md rounded-lg shadow-sm mb-4">
                                 <a href="{{ Storage::url($project->completion_proof) }}"
                                    download
-                                   class="inline-flex items-center text-blue-600 hover:text-blue-700">
+                                   class="inline-flex items-center text-primary hover:text-blue-700">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                                     </svg>
@@ -254,7 +254,7 @@
                                            name="is_public"
                                            value="1"
                                            checked
-                                           class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                           class="rounded border-gray-300 text-primary shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                     <label for="is_public" class="ml-2 block text-sm text-gray-700">
                                         Make this review public
                                     </label>
@@ -262,7 +262,7 @@
 
                                 <div class="flex justify-end">
                                     <button type="submit"
-                                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                            class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                                         Submit Review
                                     </button>
                                 </div>
@@ -277,7 +277,7 @@
                             @if(Auth::id() === $project->review->client_id)
                             <div class="flex items-center gap-4">
                                 <a href="{{ route('reviews.edit', $project->review) }}"
-                                   class="text-blue-600 hover:text-blue-700">
+                                   class="text-primary hover:text-blue-700">
                                     Edit Review
                                 </a>
                                 <form action="{{ route('reviews.destroy', $project->review) }}"

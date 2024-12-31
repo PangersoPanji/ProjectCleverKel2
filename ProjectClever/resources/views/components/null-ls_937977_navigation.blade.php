@@ -1,12 +1,13 @@
 <?php
-$navigation = [
-    'Browse Services' => route('services.index'),
-];
+if (!auth()->check() || (auth()->check() && auth()->user()->role === 'client')) {
+    $navigation['Browse Services'] = route('services.index');
+}
 
 if (auth()->check() && auth()->user()->role === 'freelancer') {
     $navigation['Post a Service'] = route('services.create');
+    $navigation['Manage Service'] = route('services.manage');
+    $navigation['My Orders'] = route('orders.freelancer');
 }
-?>
 ?>
 
 <nav class="bg-white border-b border-gray-200">
@@ -15,7 +16,7 @@ if (auth()->check() && auth()->user()->role === 'freelancer') {
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('home') }}" class="text-blue-600 font-bold text-xl">
+                    <a href="{{ route('home') }}" class="text-primary font-bold text-xl">
                         Clever
                     </a>
                 </div>
@@ -31,11 +32,7 @@ if (auth()->check() && auth()->user()->role === 'freelancer') {
                             {{ $name }}
                         </a>
                     @endforeach
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="{{ url('freelancer/login') }}" class="text-sm ml-8 text-gray-500 hover:text-gray-700 text-center">
-                            Become a Freelancer
-                        </a>
-                    </div>
+
                 </div>
             </div>
 
@@ -45,7 +42,7 @@ if (auth()->check() && auth()->user()->role === 'freelancer') {
                     <a href="{{ route('login') }}" class="text-gray-500 hover:text-gray-700">
                         Sign In
                     </a>
-                    <a href="{{ route('register') }}" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700">
+                    <a href="{{ route('register') }}" class="bg-primary text-white rounded-lg px-4 py-2 hover:bg-blue-700">
                         Get Started
                     </a>
                 @else
@@ -56,6 +53,16 @@ if (auth()->check() && auth()->user()->role === 'freelancer') {
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
+
+                        <div x-show="open" class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            @if(auth()->user()->role === 'freelancer')
+                                <a href="{{ url('freelancer') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    My Dashboard
+                                </a>
+                                <a href="{{ route('services.manage') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    My Services
+                                </a>
+                            @endif
 
                         <div x-show="open"
                              x-transition:enter="transition ease-out duration-200"
@@ -72,7 +79,7 @@ if (auth()->check() && auth()->user()->role === 'freelancer') {
                             </a>
 
                             @if(auth()->user()->role === 'client')
-                                <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <a  href="{{ route('orders.index') }}"class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     My Orders
                                 </a>
                             @endif
@@ -126,11 +133,7 @@ if (auth()->check() && auth()->user()->role === 'freelancer') {
             @endforeach
         </div>
 
-         <div class="pt-4 pb-1 border-t border-gray-200">
-            <a href="{{ url('freelancer/login') }}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300">
-                Become a Freelancer
-            </a>
-        </div>
+
 
         <!-- Mobile menu authentication links -->
         <div class="pt-4 pb-1 border-t border-gray-200">

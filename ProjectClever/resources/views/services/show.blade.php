@@ -6,7 +6,7 @@
                     <!-- Back Button -->
                     <div class="mb-6">
                         <a href="{{ url()->previous() }}"
-                           class="text-blue-600 hover:text-blue-700 flex items-center gap-2">
+                           class="text-primary hover:text-blue-700 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
@@ -37,7 +37,7 @@
                                         By: {{ $service->user->name }}
                                     </span>
                                 </div>
-                                <span class="text-2xl font-bold text-blue-600">
+                                <span class="text-2xl font-bold text-primary">
                                     ${{ number_format($service->price, 2) }}
                                 </span>
                             </div>
@@ -88,12 +88,12 @@
                                             <p class="text-gray-600 mb-2">
                                                 Get it delivered in {{ $service->duration_days }} days
                                             </p>
-                                            <p class="text-2xl font-bold text-blue-600">
+                                            <p class="text-2xl font-bold text-primary">
                                                 ${{ number_format($service->price, 2) }}
                                             </p>
                                         </div>
                                         <a href="{{ route('orders.create', $service) }}"
-                                           class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                                           class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
                                             Order Now
                                         </a>
                                     </div>
@@ -104,7 +104,7 @@
                                         <h3 class="text-xl font-semibold">Manage this service</h3>
                                         <div class="space-x-4">
                                             <a href="{{ route('services.edit', $service) }}"
-                                               class="text-blue-600 hover:text-blue-700">
+                                               class="text-primary hover:text-blue-700">
                                                 Edit Service
                                             </a>
                                         </div>
@@ -117,7 +117,7 @@
                                     Want to order this service?
                                 </p>
                                 <a href="{{ route('login') }}"
-                                   class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 inline-block">
+                                   class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-700 inline-block">
                                     Login to Order
                                 </a>
                             </div>
@@ -130,7 +130,7 @@
                                 <div class="flex-shrink-0">
                                     <!-- You can add user avatar here if you have one -->
                                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <span class="text-blue-600 font-semibold">
+                                        <span class="text-primary font-semibold">
                                             {{ substr($service->user->name, 0, 1) }}
                                         </span>
                                     </div>
