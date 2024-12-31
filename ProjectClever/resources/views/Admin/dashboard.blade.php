@@ -51,8 +51,6 @@
                 </div>
             </div>
         </div>
-        <!-- Recent Activity -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Recent Users -->
             <div class="bg-white rounded-lg shadow-sm">
                 <div class="px-6 py-4 border-b">
@@ -78,28 +76,6 @@
                                        ($user->role === 'freelancer' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800') }}">
                                     {{ ucfirst($user->role) }}
                                 </span>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <!-- Recent Services -->
-            <div class="bg-white rounded-lg shadow-sm">
-                <div class="px-6 py-4 border-b">
-                    <h3 class="text-lg font-semibold">Recent Services</h3>
-                </div>
-                <div class="p-6">
-                    <div class="space-y-4">
-                        @foreach($stats['recent_services'] as $service)
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <div class="text-sm font-medium">{{ $service->title }}</div>
-                                    <div class="text-sm text-gray-500">by {{ $service->user->name }}</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-sm font-medium">${{ number_format($service->price, 2) }}</div>
-                                    <div class="text-xs text-gray-500">{{ $service->category->name }}</div>
-                                </div>
                             </div>
                         @endforeach
                     </div>
