@@ -5,13 +5,10 @@ $navigation = [
 
 if (auth()->check() && auth()->user()->role === 'freelancer') {
     $navigation['Post a Service'] = route('services.create');
-    $navigation['Manage Service'] = route('services.manage');
-}
-
-if (!auth()->check()) {
-    $navigation['Become a Freelancer'] = url('freelancer/login');
 }
 ?>
+?>
+
 <nav class="bg-white border-b border-gray-200">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -75,7 +72,7 @@ if (!auth()->check()) {
                             </a>
 
                             @if(auth()->user()->role === 'client')
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     My Orders
                                 </a>
                             @endif
@@ -150,7 +147,7 @@ if (!auth()->check()) {
                     </a>
 
                     @if(auth()->user()->role === 'client')
-                        <a 
+                        <a href="{{ route('orders.index') }}"
                            class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300">
                             My Orders
                         </a>
