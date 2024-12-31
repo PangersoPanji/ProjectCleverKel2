@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\OrderController;
@@ -12,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/categories/{category}', [ServiceController::class, 'byCategory'])->name('services.category');
+Route::get('/help', [ContentController::class, 'index'])->name('help');
+Route::get('/categories/{category}', [ServiceController::class, 'byCategory'])
+    ->name('services.category');
 
 // Authentication Routes
 require __DIR__ . '/auth.php';
